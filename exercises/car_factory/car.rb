@@ -1,6 +1,6 @@
 class Car
-attr_reader :brand, :color
-AVAILABLE_COLORS = %i(black red yellow)
+attr_accessor :brand, :color
+AVAILABLE_COLORS = %i( black red yellow)
 
   def initialize(brand, color: AVAILABLE_COLORS.first)
     @brand = brand
