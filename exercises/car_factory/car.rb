@@ -2,12 +2,10 @@ class Car
   attr_accessor :brand, :color
   AVAILABLE_COLORS = %i[black red yellow]
 
-
   def initialize(brand, color: AVAILABLE_COLORS.first)
     @brand = brand
     @color = color
     AVAILABLE_COLORS.rotate!(1)
-
   end
 
   def brand

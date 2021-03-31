@@ -10,13 +10,14 @@ class CarFactory
     @factory = factory
     @brands = brands
 
-    raise UnsupportedBrandException.brand_not_supported_error(@brands) unless SUPPORTED_BRANDS.include?(@brands) || @brands.is_a?(Array)
+    raise UnsupportedBrandException.brand_not_supported_error(@brands) unless
+    SUPPORTED_BRANDS.include?(@brands) || @brands.is_a?(Array)
   end
 
   def make_car(fdbrand = nil)
     @fdbrand = fdbrand
 
-    if @brands.is_a?(Array) && @fdbrand == nil
+    if @brands.is_a?(Array) && @fdbrand.nil?
       raise UnsupportedBrandException.no_brand_error
     elsif @brands.is_a?(Array) && !@brands.include?(@fdbrand)
       raise UnsupportedBrandException.no_brand_error
@@ -51,21 +52,21 @@ class CarFactory
       SUPPORTED_BRANDS.rotate!(1)
     end
     cars
-  else 
-    
-      car_amount.map {|k,v| if SUPPORTED_BRANDS.include?(k)
-        v.times do
-      cars << Car.new(k)
-        end
-      end}
+    else
+      car_amount.map do |k, v| if SUPPORTED_BRANDS.include?(k)
+                                 v.times do
+                                   cars << Car.new(k)
+                                 end
+                               end
+      end
     end
-      cars
+    cars
   end
 
   class UnsupportedBrandException < StandardError
 
     def self.brand_not_supported_error(brands)
-      raise UnsupportedBrandException, "Brand not supported: '#{(brands).to_s.capitalize}'" unless SUPPORTED_BRANDS.include?(brands)
+      raise UnsupportedBrandException, "Brand not supported: '#{brands.to_s.capitalize}'" unless SUPPORTED_BRANDS.include?(brands)
     end
   
     def self.no_brand_error
